@@ -23,8 +23,10 @@ public class MinesweeperGame {
     public static void main(String[] args) {
         showGameStartComments();
         initializeGame();
+
         while (true) {
             showBoard();
+
             if (doesUserWinTheGame()) {
                 System.out.println("지뢰를 모두 찾았습니다. GAME CLEAR!");
                 break;
@@ -33,6 +35,7 @@ public class MinesweeperGame {
                 System.out.println("지뢰를 밟았습니다. GAME OVER!");
                 break;
             }
+
             String cellInput = getCellInputFromUser();
             String userActionInput = getUserActionInputFromUser();
             actOnCell(cellInput, userActionInput);
@@ -42,6 +45,7 @@ public class MinesweeperGame {
     private static void actOnCell(String cellInput, String userActionInput) {
         int selectedColIndex = getSelectedColIndex(cellInput);
         int selectedRowIndex = getSelectedRowIndex(cellInput);
+
         if (doesUserChooseToPlantFlag(userActionInput)) {
             BOARD[selectedRowIndex][selectedColIndex] = FLAG_SIGN;
             checkIfGameIsOver();
@@ -54,6 +58,7 @@ public class MinesweeperGame {
                 changeGameStatusToLose();
                 return;
             }
+
             open(selectedRowIndex, selectedColIndex);
             checkIfGameIsOver();
             return;
@@ -180,47 +185,46 @@ public class MinesweeperGame {
 
         for (int row = 0; row < BOARD_ROW_SIZE; row++) {
             for (int col = 0; col < BOARD_COL_SIZE; col++) {
-                int count = 0;
-
-                // 지뢰가 아닐 경우
-                if (!isLandMineCell(col, row)) {
-                    // 왼쪽 대각선 칸의 landMines가 true일 경우
-                    if (row - 1 >= 0 && col - 1 >= 0 && isLandMineCell(col - 1, row - 1)) {
-                        count++;
-                    }
-
-                    //
-                    if (row - 1 >= 0 && isLandMineCell(col, row - 1)) {
-                        count++;
-                    }
-                    if (row - 1 >= 0 && col + 1 < BOARD_COL_SIZE && isLandMineCell(col + 1, row - 1)) {
-                        count++;
-                    }
-                    if (col - 1 >= 0 && isLandMineCell(col - 1, row)) {
-                        count++;
-                    }
-                    if (col + 1 < BOARD_COL_SIZE && isLandMineCell(col + 1, row)) {
-                        count++;
-                    }
-                    if (row + 1 < BOARD_ROW_SIZE && col - 1 >= 0 && isLandMineCell(col - 1, row + 1)) {
-                        count++;
-                    }
-                    if (row + 1 < BOARD_ROW_SIZE && isLandMineCell(col, row + 1)) {
-                        count++;
-                    }
-                    if (row + 1 < BOARD_ROW_SIZE && col + 1 < BOARD_COL_SIZE && isLandMineCell(col + 1, row + 1)) {
-                        count++;
-                    }
-
-                    // 현재 칸의 주변에 지뢰가 몇 개 잇는지
-                    NEARBY_LANDMINE_COUNTS[row][col] = count;
+                if (isLandMineCell(col, row)) {
+                    NEARBY_LANDMINE_COUNTS[row][col] = 0;
                     continue;
                 }
-
-                // 지뢰인 경우
-                NEARBY_LANDMINE_COUNTS[row][col] = 0;
+                int count = countNearByLandMines(row, col);
+                NEARBY_LANDMINE_COUNTS[row][col] = count;
             }
         }
+    }
+
+    private static int countNearByLandMines(int row, int col) {
+        int count = 0;
+        // 왼쪽 대각선 칸의 landMines가 true일 경우
+        if (row - 1 >= 0 && col - 1 >= 0 && isLandMineCell(col - 1, row - 1)) {
+            count++;
+        }
+
+        //
+        if (row - 1 >= 0 && isLandMineCell(col, row - 1)) {
+            count++;
+        }
+        if (row - 1 >= 0 && col + 1 < BOARD_COL_SIZE && isLandMineCell(col + 1, row - 1)) {
+            count++;
+        }
+        if (col - 1 >= 0 && isLandMineCell(col - 1, row)) {
+            count++;
+        }
+        if (col + 1 < BOARD_COL_SIZE && isLandMineCell(col + 1, row)) {
+            count++;
+        }
+        if (row + 1 < BOARD_ROW_SIZE && col - 1 >= 0 && isLandMineCell(col - 1, row + 1)) {
+            count++;
+        }
+        if (row + 1 < BOARD_ROW_SIZE && isLandMineCell(col, row + 1)) {
+            count++;
+        }
+        if (row + 1 < BOARD_ROW_SIZE && col + 1 < BOARD_COL_SIZE && isLandMineCell(col + 1, row + 1)) {
+            count++;
+        }
+        return count;
     }
 
     private static void showGameStartComments() {
