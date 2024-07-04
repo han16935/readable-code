@@ -25,20 +25,31 @@ public class MinesweeperGame {
         initializeGame();
 
         while (true) {
-            showBoard();
+            try {
+                showBoard();
 
-            if (doesUserWinTheGame()) {
-                System.out.println("지뢰를 모두 찾았습니다. GAME CLEAR!");
-                break;
-            }
-            if (doesUserLoseTheGame()) {
-                System.out.println("지뢰를 밟았습니다. GAME OVER!");
-                break;
+                if (doesUserWinTheGame()) {
+                    System.out.println("지뢰를 모두 찾았습니다. GAME CLEAR!");
+                    break;
+                }
+                if (doesUserLoseTheGame()) {
+                    System.out.println("지뢰를 밟았습니다. GAME OVER!");
+                    break;
+                }
+
+                String cellInput = getCellInputFromUser();
+                String userActionInput = getUserActionInputFromUser();
+                actOnCell(cellInput, userActionInput);
             }
 
-            String cellInput = getCellInputFromUser();
-            String userActionInput = getUserActionInputFromUser();
-            actOnCell(cellInput, userActionInput);
+            catch(AppException e) {
+                System.out.println(e.getMessage());
+            }
+
+            catch(Exception e) {
+                System.out.println("프로그램에 문제가 생겼습니다.");
+                e.printStackTrace(); // 안티 패턴, 실무에서는 별도의 log system 사용
+            }
         }
     }
 
@@ -121,12 +132,17 @@ public class MinesweeperGame {
 
     private static boolean isAllCellOpened() {
         return Arrays.stream(BOARD) // Stream<String[]> return
-                .flatMap(Arrays::stream)// Stream<String> return > 이차원 배열로 만들어진 stream 분해
-                .noneMatch(cell -> cell.equals(CLOSED_CELL_SIGN));
+                .flatMap(Arrays::stream) // Stream<String> return > 이차원 배열로 만들어진 stream 분해
+                .noneMatch(CLOSED_CELL_SIGN::equals);
     }
 
     private static int convertRowFrom(char cellInputRow) {
-        return Character.getNumericValue(cellInputRow) - 1;
+        int rowIndex = Character.getNumericValue(cellInputRow) - 1;
+        if(rowIndex >= BOARD_ROW_SIZE) {
+            throw new AppException("잘못된 입력입니다");
+        }
+
+        return rowIndex;
     }
 
     private static int getSelectedColIndex(String cellInput) {
@@ -153,7 +169,7 @@ public class MinesweeperGame {
             case 'j':
                 return 9;
             default:
-                return -1;
+                throw new AppException("잘못된 입력입니다.");
         }
     }
 
