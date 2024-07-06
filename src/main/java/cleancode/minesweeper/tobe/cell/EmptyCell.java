@@ -1,19 +1,7 @@
 package cleancode.minesweeper.tobe.cell;
 
-import cleancode.minesweeper.tobe.Cell;
-
-public class EmptyCell extends Cell2 {
+public class EmptyCell extends Cell {
     private static final String EMPTY_SIGN = "■";
-
-    @Override
-    public void turnOnLandMine() {
-        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
-    }
-
-    @Override
-    public void updateNearbyLandMineCount(int count) {
-        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
-    }
 
     @Override
     public boolean isLandMine() {
