@@ -1,11 +1,6 @@
 package cleancode.minesweeper.tobe;
 
-import cleancode.minesweeper.tobe.cell.Cell;
-import cleancode.minesweeper.tobe.cell.EmptyCell;
-import cleancode.minesweeper.tobe.cell.LandMineCell;
-import cleancode.minesweeper.tobe.cell.NumberCell;
-import cleancode.minesweeper.tobe.game.GameInitializable;
-import cleancode.minesweeper.tobe.game.GameRunnable;
+import cleancode.minesweeper.tobe.cell.*;
 import cleancode.minesweeper.tobe.gamelevel.GameLevel;
 
 import java.util.Arrays;
@@ -38,6 +33,7 @@ public class GameBoard  {
     }
 
     private Cell findCell(int rowIndex, int colIndex) {
+
         return board[rowIndex][colIndex];
     }
 

@@ -18,20 +18,21 @@ public class StudyCafePass {
         return new StudyCafePass(passType, duration, price, discountRate);
     }
 
-    public StudyCafePassType getPassType() {
-        return passType;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
     public int getPrice() {
         return price;
     }
 
     public double getDiscountRate() {
         return discountRate;
+    }
+
+    public boolean hasSamePassType(StudyCafePassType studyCafePassType){
+        return passType == studyCafePassType;
+    }
+
+    public boolean hasSamePassTypeAndDuration(StudyCafePassType passType, int duration) {
+        return this.passType == passType
+                && this.duration == duration;
     }
 
     public String display() {
@@ -47,4 +48,10 @@ public class StudyCafePass {
         return "";
     }
 
+    public int calculateDiscountPrice(){
+        return (int) (price * discountRate);
+    }
+    public int calculateTotalPrice(StudyCafeLockerPass lockerPass){
+        return price - calculateDiscountPrice() + (lockerPass != null ? lockerPass.getPrice() : 0);
+    }
 }

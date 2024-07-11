@@ -22,7 +22,7 @@ public class OutputHandler {
         System.out.println("1. 시간 이용권(자유석) | 2. 주단위 이용권(자유석) | 3. 1인 고정석");
     }
 
-    public void showPassListForSelection(List<StudyCafePass> passes) {
+    public void showPassList(List<StudyCafePass> passes) {
         System.out.println();
         System.out.println("이용권 목록");
         for (int index = 0; index < passes.size(); index++) {
@@ -42,6 +42,9 @@ public class OutputHandler {
         System.out.println("1. 예 | 2. 아니오");
     }
 
+    public void showPassOrderSummary(StudyCafePass selectedPass) {
+        showPassOrderSummary(selectedPass, null);
+    }
     public void showPassOrderSummary(StudyCafePass selectedPass, StudyCafeLockerPass lockerPass) {
         System.out.println();
         System.out.println("이용 내역");
@@ -51,12 +54,12 @@ public class OutputHandler {
         }
 
         double discountRate = selectedPass.getDiscountRate();
-        int discountPrice = (int) (selectedPass.getPrice() * discountRate);
+        int discountPrice = selectedPass.calculateDiscountPrice();
         if (discountPrice > 0) {
             System.out.println("이벤트 할인 금액: " + discountPrice + "원");
         }
 
-        int totalPrice = selectedPass.getPrice() - discountPrice + (lockerPass != null ? lockerPass.getPrice() : 0);
+        int totalPrice = selectedPass.calculateTotalPrice(lockerPass);
         System.out.println("총 결제 금액: " + totalPrice + "원");
         System.out.println();
     }

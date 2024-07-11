@@ -26,7 +26,7 @@ public class InputHandler {
         throw new AppException("잘못된 입력입니다.");
     }
 
-    public StudyCafePass getSelectPass(List<StudyCafePass> passes) {
+    public StudyCafePass getPassTypeFromUser(List<StudyCafePass> passes) {
         String userInput = SCANNER.nextLine();
         int selectedIndex = Integer.parseInt(userInput) - 1;
         return passes.get(selectedIndex);
