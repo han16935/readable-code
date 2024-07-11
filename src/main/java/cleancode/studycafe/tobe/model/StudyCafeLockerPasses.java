@@ -14,10 +14,10 @@ public class StudyCafeLockerPasses {
         return new StudyCafeLockerPasses(lockerPasses);
     }
 
-    public Optional<StudyCafeLockerPass> getLockerPassBasedOn(StudyCafePass selectedStudyCafePass) {
+    public Optional<StudyCafeLockerPass> getLockerPassBasedOn(StudyCafeSeatPass selectedStudyCafeSeatPass) {
         return lockerPasses.stream()
                 .filter(pass ->
-                        pass.hasSamePassTypeAndDuration(selectedStudyCafePass)
+                        pass.hasSamePassTypeAndDuration(selectedStudyCafeSeatPass)
 
                 )
                 .findFirst();

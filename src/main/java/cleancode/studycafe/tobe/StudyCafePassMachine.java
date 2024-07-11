@@ -19,10 +19,10 @@ public class StudyCafePassMachine {
             studyCafeIOHandler.showAnnouncement();
 
             StudyCafePassType studyCafePassType = studyCafeIOHandler.askPassType();
-            StudyCafePasses allPasses = studyCafeFileHandler.readStudyCafePasses();
-            List<StudyCafePass> passCandidates = allPasses.findPassBy(studyCafePassType);
+            StudyCafeSeatPasses allPasses = studyCafeFileHandler.readStudyCafePasses();
+            List<StudyCafeSeatPass> passCandidates = allPasses.findPassBy(studyCafePassType);
 
-            StudyCafePass selectedPass = studyCafeIOHandler.getPassTypeFromUser(passCandidates);
+            StudyCafeSeatPass selectedPass = studyCafeIOHandler.getPassTypeFromUser(passCandidates);
 
             if (StudyCafePassType.doesNotSupportLockerUseType(studyCafePassType)) {
                 studyCafeIOHandler.showPassOrderSummary(selectedPass);
