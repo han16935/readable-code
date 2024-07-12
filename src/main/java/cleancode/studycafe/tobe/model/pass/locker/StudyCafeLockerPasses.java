@@ -1,4 +1,6 @@
-package cleancode.studycafe.tobe.model;
+package cleancode.studycafe.tobe.model.pass.locker;
+
+import cleancode.studycafe.tobe.model.pass.seat.StudyCafeSeatPass;
 
 import java.util.List;
 import java.util.Optional;

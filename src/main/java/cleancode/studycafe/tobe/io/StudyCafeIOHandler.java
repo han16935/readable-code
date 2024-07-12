@@ -1,8 +1,8 @@
 package cleancode.studycafe.tobe.io;
 
-import cleancode.studycafe.tobe.model.StudyCafeLockerPass;
-import cleancode.studycafe.tobe.model.StudyCafeSeatPass;
-import cleancode.studycafe.tobe.model.StudyCafePassType;
+import cleancode.studycafe.tobe.model.pass.locker.StudyCafeLockerPass;
+import cleancode.studycafe.tobe.model.pass.seat.StudyCafeSeatPass;
+import cleancode.studycafe.tobe.model.pass.StudyCafePassType;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class StudyCafeIOHandler {
     private final InputHandler inputHandler = new InputHandler();
     private final OutputHandler outputHandler = new OutputHandler();
 
-    public boolean doesUserSelectToUseLocker(StudyCafeLockerPass studyCafeLockerPass){
+    public boolean doesUserWantToUseLocker(StudyCafeLockerPass studyCafeLockerPass){
         outputHandler.askLockerPass(studyCafeLockerPass);
         return inputHandler.getLockerSelection();
     }

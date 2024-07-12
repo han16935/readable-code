@@ -1,6 +1,10 @@
-package cleancode.studycafe.tobe.model;
+package cleancode.studycafe.tobe.model.pass.seat;
 
-public class StudyCafeSeatPass implements StudyCafePass{
+import cleancode.studycafe.tobe.model.pass.locker.StudyCafeLockerPass;
+import cleancode.studycafe.tobe.model.pass.StudyCafePass;
+import cleancode.studycafe.tobe.model.pass.StudyCafePassType;
+
+public class StudyCafeSeatPass implements StudyCafePass {
 
     private final StudyCafePassType passType;
     private final int duration;
